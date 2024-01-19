@@ -365,7 +365,8 @@ class BesoAgent(BaseAgent):
                 x = torch.randn((len(input_state)*get_mean, self.scaler.y_bounds.shape[1]), device=self.device) * self.sigma_max
         
             else:
-                x = torch.randn((len(input_state), 1, self.scaler.y_bounds.shape[1]), device=self.device) * self.sigma_max
+                # x = torch.randn((len(input_state), 1, self.scaler.y_bounds.shape[1]), device=self.device) * self.sigma_max
+                x = torch.randn((len(input_state), self.scaler.y_bounds.shape[1]), device=self.device) * self.sigma_max
         
         x_0 = self.sample_loop(sigmas, x, input_state, goal, sampler_type, extra_args)
         

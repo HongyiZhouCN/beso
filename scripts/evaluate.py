@@ -20,15 +20,17 @@ torch.cuda.empty_cache()
 @hydra.main(config_path="../configs", config_name="evaluate_kitchen.yaml")
 def main(cfg: DictConfig) -> None:
     
-    wandb.config = cfg
+    wandb.config = OmegaConf.to_container(cfg, resolve=True, throw_on_missing=True)
+
     if cfg.log_wandb:
         run = wandb.init(
-            project='gc_block_push_sampler_comparison', 
-            entity='add_wandb_acc_name', 
+            project='beso_kitchen_evaluation',
+            entity='zhouhongyi',
             group=f'noise_comp_' + cfg.sampler_type,
-            mode="disabled",  
+            # mode="disabled",
             config=wandb.config
         )
+
     # get the path to the config yaml file
     cfg_store_path = os.path.join(cfg.model_store_path,'.hydra/config.yaml')
     # init wandb logger and config from hydra path 

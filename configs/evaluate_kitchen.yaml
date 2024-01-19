@@ -2,7 +2,7 @@
 # This is the config file for the evaluation of the model
 # you can analyze the performance of the model in different ways
 # first chose the path to the model you want to evaluate
-model_store_path: '/path/to/beso/trained_models/kitchen/c_beso_1'
+model_store_path: '/home/hongyi/Codes/demo_acc_rl/beso/scripts/logs/franka_kitchen/runs/2024-01-17/17-40-32'
 # next define some general stuff for evaluation
 log_wandb: True
 
@@ -27,7 +27,7 @@ device: cpu
 # not really used
 use_scaler: False
 # this is to record videos of the evaluation
-render_workspace:  False
+render_workspace:  True
 store_video:  False
 
 ### next chose what kind of evaluation you want to do

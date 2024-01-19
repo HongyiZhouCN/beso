@@ -19,7 +19,7 @@ OmegaConf.register_new_resolver(
 )
 
 
-@hydra.main(config_path="../configs", config_name="block_push_main_config.yaml")
+@hydra.main(config_path="../configs", config_name="franka_kitchen_main_config.yaml")
 def main(cfg: DictConfig) -> None:
     
     np.random.seed(cfg.seed)
@@ -30,7 +30,7 @@ def main(cfg: DictConfig) -> None:
     wandb.config = OmegaConf.to_container(cfg, resolve=True, throw_on_missing=True)
 
     run = wandb.init(
-        project=cfg.wandb.project, 
+        project=cfg.wandb.project,
         entity=cfg.wandb.entity,
         group=cfg.group,
         # mode="disabled",

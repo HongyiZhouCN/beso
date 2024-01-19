@@ -5,7 +5,7 @@ defaults:
 log_dir: logs/block_pushing/
 plot_dir: plots/block_pushing/
 plot_name: ${now:%Y-%m-%d}.png
-data_path: /path/to/beso/environments/data/cbet_datasets/multimodal_push_fixed_target
+data_path: /home/hongyi/Codes/demo_acc_rl/beso/datasets/cbet_datasets/multimodal_push_fixed_target
 
 hydra:
   run:
@@ -14,10 +14,10 @@ hydra:
     dir: ${log_dir}/sweeps/${now:%Y-%m-%d}/${now:%H-%M-%S}
     subdir: ${hydra.job.override_dirname}
 
-group: group_name
+group: beso_mlp
 
 wandb:
-  entity: add_wandb_acc_name
+  entity: zhouhongyi
   project: beso_experiments
 
 # general params
@@ -25,7 +25,7 @@ device: 'cuda'
 seed: 6
 scale_data: True
 future_seq_length: 1
-window_size: 5
+window_size: 1 # was 5
 mask_targets: False
 reduce_obs_dim: true
 
@@ -34,16 +34,17 @@ goal_conditional: 'future'
 action_dim: 2
 input_dim: 18
 obs_dim: 10
-goal_dim: 4
+goal_dim: 10
 
 # policy model params
-hidden_dim: 240 # for transformer, must be a multiple of n_heads (6 in diffusion_gpt)
+hidden_dim: 256 # for transformer, must be a multiple of n_heads (6 in diffusion_gpt) (240 by default)
 use_spectral_norm: false
-num_hidden_layers: 4
+num_hidden_layers: 2
 train_method: 'steps'
 max_train_steps: 60000
 max_epochs: 100
 eval_every_n_steps: 4000
+residual_style: False
 
 # define evaluation types 
 evaluate_multigoal: True
