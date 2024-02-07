@@ -36,8 +36,8 @@ multi_goal_fn:
 
 env_name: 'kitchen-all-v0'
 seed: ${seed}
-train_batch_size: 1024 
-test_batch_size:  1024 
+train_batch_size: 1024
+test_batch_size:  1024
 num_workers: 4
 eval_n_times: 100
 eval_n_steps: 280

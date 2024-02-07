@@ -84,6 +84,7 @@ class GCTimeScoreNetwork(nn.Module):
         # embed = self.embed(t)
         if len(state.shape) == 3:
             embed = einops.rearrange(embed, 'b d -> b 1 d')
+            # embed = embed.repeat(1, state.shape[1], 1)
         # during training randomly mask out the goal
         # to train the conditional model with classifier-free guidance wen need 
         # to 0 out some of the conditional during training with a desrired probability
