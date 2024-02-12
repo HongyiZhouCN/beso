@@ -5,7 +5,7 @@ defaults:
 log_dir: logs/franka_kitchen/
 plot_dir: plots/franka_kitchen/
 plot_name: ${now:%Y-%m-%d}.png
-data_path: /home/hongyi/Codes/demo_acc_rl/beso/datasets/cbet_datasets/relay_kitchen
+data_path: /home/hongyi/Codes/score_rl/beso/datasets/cbet_datasets/relay_kitchen
 
 hydra:
   run:
@@ -14,7 +14,7 @@ hydra:
     dir: ${log_dir}/runs/${now:%Y-%m-%d}/${now:%H-%M-%S}
     subdir: ${hydra.job.override_dirname}
 
-group: film-mlp-bigger-no-mask-cond
+group: film-mlp-1024-6
 
 wandb:
   entity: zhouhongyi
@@ -37,7 +37,7 @@ goal_dim: 30
 # policy model params
 hidden_dim: 1024
 use_spectral_norm: false
-num_hidden_layers: 12
+num_hidden_layers: 6
 train_method: 'steps'
 max_train_steps: 40000 # was 40000
 max_epochs: 500

@@ -5,7 +5,7 @@ defaults:
 log_dir: logs/block_pushing/
 plot_dir: plots/block_pushing/
 plot_name: ${now:%Y-%m-%d}.png
-data_path: /home/hongyi/Codes/demo_acc_rl/beso/datasets/cbet_datasets/multimodal_push_fixed_target
+data_path: /home/hongyi/Codes/score_rl/beso/datasets/cbet_datasets/multimodal_push_fixed_target
 
 hydra:
   run:
@@ -14,7 +14,7 @@ hydra:
     dir: ${log_dir}/sweeps/${now:%Y-%m-%d}/${now:%H-%M-%S}
     subdir: ${hydra.job.override_dirname}
 
-group: beso_filmmlp-12layers1024
+group: beso_mlp_home
 
 wandb:
   entity: zhouhongyi
@@ -39,7 +39,7 @@ goal_dim: 10
 # policy model params
 hidden_dim: 1024 # for transformer, must be a multiple of n_heads (6 in diffusion_gpt) (240 by default)
 use_spectral_norm: false
-num_hidden_layers: 12
+num_hidden_layers: 8
 train_method: 'steps'
 max_train_steps: 60000
 max_epochs: 100
@@ -63,6 +63,6 @@ use_ema: True
 decay: 0.999 
 update_ema_every_n_steps: 1
 sigma_data: 0.5 
-cond_mask_prob: 0.1
+cond_mask_prob: 0.0
 cond_lambda: 2 # only required for inference of CFG-BESO
 n_timesteps: 3 # number of diffusion steps during inference

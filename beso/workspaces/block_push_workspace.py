@@ -107,7 +107,7 @@ class BlockPushingManager(BaseWorkspaceManger):
         if store_video:
             import imageio
 
-        self.render = True
+        self.render = False
 
         self.env = BlockPushMultimodal(render=self.render)
         log.info('Starting trained model evaluation on the multimodal blockpush environment')
