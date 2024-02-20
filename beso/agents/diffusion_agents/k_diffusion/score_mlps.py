@@ -190,6 +190,9 @@ class FiLMTimeScoreNetwork(nn.Module):
         # embed = self.embed(t)
         if len(state.shape) == 3:
             embed = einops.rearrange(embed, 'b d -> b 1 d')
+        ## FIXME: Expand embed to match the state shape
+        elif len(state.shape) == 4:
+            embed = einops.rearrange(embed, 'b d -> b 1 1 d')
         # during training randomly mask out the goal
         # to train the conditional model with classifier-free guidance wen need 
         # to 0 out some of the conditional during training with a desrired probability
