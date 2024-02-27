@@ -191,7 +191,7 @@ class FiLMTimeScoreNetwork(nn.Module):
         if len(state.shape) == 3:
             embed = einops.rearrange(embed, 'b d -> b 1 d')
         ## FIXME: Expand embed to match the state shape
-        elif len(state.shape) == 4:
+        elif len(state.shape) == 4 and len(embed.shape) < 4:
             embed = einops.rearrange(embed, 'b d -> b 1 1 d')
         # during training randomly mask out the goal
         # to train the conditional model with classifier-free guidance wen need 
@@ -204,8 +204,11 @@ class FiLMTimeScoreNetwork(nn.Module):
             goal = torch.zeros_like(goal)   # goal
 
         cond_embed = goal + embed
-        x = torch.cat([state, action], dim=-1) 
+        x = torch.cat([state, action], dim=-1)
+
         x = self.layers(x, cond_embed)
+
+
         if return_variance:
             return x, x.flatten(1).mean(1)
         else:
