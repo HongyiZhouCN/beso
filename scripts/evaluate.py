@@ -17,7 +17,7 @@ OmegaConf.register_new_resolver(
 )
 torch.cuda.empty_cache()
 
-@hydra.main(config_path="../configs", config_name="evaluate_blocks.yaml")
+@hydra.main(config_path="../configs", config_name="evaluate_kitchen.yaml")
 def main(cfg: DictConfig) -> None:
     
     wandb.config = OmegaConf.to_container(cfg, resolve=True, throw_on_missing=True)

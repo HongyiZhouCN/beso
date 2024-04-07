@@ -114,7 +114,7 @@ workspaces:
 log_dir: logs/franka_kitchen/
 plot_dir: plots/franka_kitchen/
 plot_name: ${now:%Y-%m-%d}.png
-data_path: /path/to/beso/environments/data/cbet_datasets/relay_kitchen
+data_path: /home/hongyi/Codes/demo_acc_rl/beso/datasets/cbet_datasets/relay_kitchen
 group: edm_loglogistics_seed_run
 wandb:
   entity: add_wandb_acc_name

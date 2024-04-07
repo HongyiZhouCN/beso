@@ -3,10 +3,10 @@
 # you can analyze the performance of the model in different ways
 # first chose the path to the model you want to evaluate
 
-model_store_path: '/home/hongyi/Codes/demo_acc_rl/beso/scripts/logs/franka_kitchen/runs/2024-01-18/14-39-01'
+model_store_path: '/home/hongyi/Codes/demo_acc_rl/beso/trained_models/kitchen/c_beso_1'
 #model_store_path: '/home/hongyi/Codes/demo_acc_rl/beso/scripts/logs/franka_kitchen/runs/2024-01-17/19-15-37'
 # next define some general stuff for evaluation
-log_wandb: True
+log_wandb: False
 
 num_runs: 100
 n_inference_steps: 3
