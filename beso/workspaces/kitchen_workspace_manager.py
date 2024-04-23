@@ -258,7 +258,7 @@ class FrankaKitchenManager(BaseWorkspaceManger):
             goal = self.multi_goals_fn(obs, goal_idx, 0)
             if isinstance(agent, BesoAgent):
                 agent.reset()
-            for n in tqdm(range(self.eval_n_steps)):
+            for n in tqdm(range(self.eval_n_steps), disable=True):
                 if self.render:
                     self.env.render(mode="human")
                 if store_video:
@@ -443,7 +443,7 @@ class FrankaKitchenManager(BaseWorkspaceManger):
         
         print('average reward {}'.format(avrg_reward))
         print('average result {}'.format(avrg_result))
-        print({"Cond_success_ratio": avrg_result/(avrg_reward + 1e-6)})
+        # print({"Cond_success_ratio": avrg_result/(avrg_reward + 1e-6)})
         log.info(f"Average reward: {avrg_reward} std: {std_reward}")
         log.info(f"Average result: {avrg_result} std: {std_result}")
         log.info('... finished trained model evaluation of the blockpush environment environment.')
