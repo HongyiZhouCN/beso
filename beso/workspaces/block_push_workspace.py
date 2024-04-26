@@ -107,14 +107,12 @@ class BlockPushingManager(BaseWorkspaceManger):
         if store_video:
             import imageio
 
-        self.render = False
-
         self.env = BlockPushMultimodal(render=self.render)
-        log.info('Starting trained model evaluation on the multimodal blockpush environment')
+        # log.info('Starting trained model evaluation on the multimodal blockpush environment')
         rewards = []
         results = []
         frames = [] 
-        for goal_idx in range(self.eval_n_times):
+        for goal_idx in tqdm(range(self.eval_n_times)):
             total_reward = 0
             info = None
             done = False
@@ -129,7 +127,7 @@ class BlockPushingManager(BaseWorkspaceManger):
                 goal = goal[:, :10]
 
             # now run the agent for n steps 
-            for n in tqdm(range(self.eval_n_steps)):
+            for n in tqdm(range(self.eval_n_steps), disable=True):
                 if self.render:
                     self.env.render(mode="human")
                 if store_video:
@@ -137,9 +135,9 @@ class BlockPushingManager(BaseWorkspaceManger):
                     frames.append(frame)
                 if done or n == self.eval_n_steps-1:
                     rewards.append(total_reward)
-                    print('Total reward: {}'.format(total_reward))
+                    # print('Total reward: {}'.format(total_reward))
                     result = self._report_result_upon_completion(goal_idx)
-                    log.info(f"Result: {result}")
+                    # log.info(f"Result: {result}")
                     if log_wandb:
                         wandb.log({'Result': result,
                                    'Reward': total_reward
@@ -179,7 +177,7 @@ class BlockPushingManager(BaseWorkspaceManger):
                 if self.goal_conditional == "onehot":
                     goal = self.goals_fn(obs, goal_idx, n)
                 
-        log.info(f"Total reward: {total_reward}")
+        # log.info(f"Total reward: {total_reward}")
         
         self.env.close()
         if store_video:
@@ -194,12 +192,12 @@ class BlockPushingManager(BaseWorkspaceManger):
         avrg_result = sum(results)/len(results)
         std_result = np.array(results).std()
         
-        print('average reward {}'.format(avrg_reward))
-        print('average result {}'.format(avrg_result))
-        print({"Cond_success_ratio": avrg_result/avrg_reward})
+        # print('average reward {}'.format(avrg_reward))
+        # print('average result {}'.format(avrg_result))
+        # print({"Cond_success_ratio": avrg_result/avrg_reward})
         log.info(f"Average reward: {avrg_reward} std: {std_reward}")
         log.info(f"Average result: {avrg_result} std: {std_result}")
-        log.info('... finished trained model evaluation of the blockpush environment environment.')
+        # log.info('... finished trained model evaluation of the blockpush environment environment.')
         if log_wandb:
             wandb.log({"Average_reward": avrg_reward})
             wandb.log({"Average_result": avrg_result})
@@ -216,7 +214,7 @@ class BlockPushingManager(BaseWorkspaceManger):
         }
         # return the average reward 
         return return_dict
-    
+
     def _report_result_upon_completion(self, goal_idx=None):
         """
         Report the result upon completion of the episode
@@ -232,7 +230,7 @@ class BlockPushingManager(BaseWorkspaceManger):
             goals = [(first_frame[i], i) for i in range(4) if onehot_mask[i]]
             goals = sorted(goals, key=lambda x: x[0])
             goals = [g[1] for g in goals]
-            logging.info(f"Expected tasks {goals}")
+            # logging.info(f"Expected tasks {goals}")
             expected_tasks = set(goals)
             conditional_done = set(self.env.all_completions).intersection(
                 expected_tasks

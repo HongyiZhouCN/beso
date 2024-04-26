@@ -373,7 +373,7 @@ class BlockPushMultimodal(block_pushing.BlockPush):
             else:
                 if self._init_distance[i] != 100:
                     if np.abs(new_distance - self._init_distance[i]) > 1e-3:
-                        logging.info(f"Block {i} moved on step {self._step_num}")
+                        # logging.info(f"Block {i} moved on step {self._step_num}")
                         self._init_distance[i] = 100
 
         self._step_num += 1
@@ -421,9 +421,9 @@ class BlockPushMultimodal(block_pushing.BlockPush):
                     dist = _block_target_dist(b, t)
                     if dist < self.goal_dist_tolerance:
                         self._in_target[t_i][b_i] = 0
-                        logging.info(
-                            f"Block {b_i} entered target {t_i} on step {self._step_num}"
-                        )
+                        # logging.info(
+                        #     f"Block {b_i} entered target {t_i} on step {self._step_num}"
+                        # )
                         task_idx = 2 * b_i + t_i  # 0, 1, 2, 3
                         if task_idx in self.tasks_to_complete:
                             self.all_completions.append(task_idx)
