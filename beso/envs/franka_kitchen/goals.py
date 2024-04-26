@@ -87,7 +87,7 @@ def get_goal_fn(
         def goal_fn(state, goal_idx, frame_idx):
             if goal_idx > 555:
                 goal_idx = goal_idx - 555
-            logging.info(f"goal_idx: {train_idx[goal_idx]}")
+            # logging.info(f"goal_idx: {train_idx[goal_idx]}")
             obs, _, _, _ = relay_traj[train_idx[goal_idx]]  # seq_len x obs_dim
             obs = obs[-goal_seq_len:]
             return obs

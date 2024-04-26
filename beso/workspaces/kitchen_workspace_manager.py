@@ -244,11 +244,11 @@ class FrankaKitchenManager(BaseWorkspaceManger):
             import imageio
         self.env = gym.make(self.env_name)
         self.env.seed(self.seed)
-        log.info('Starting trained model evaluation on the multimodal kitchen environment')
+        # log.info('Starting trained model evaluation on the multimodal kitchen environment')
         rewards = []
         results = []
         frames = [] 
-        for goal_idx in range(self.eval_n_times):
+        for goal_idx in tqdm(range(self.eval_n_times)):
             if goal_idx > 536:
                 goal_idx = goal_idx - 536
             total_reward = 0
@@ -267,8 +267,8 @@ class FrankaKitchenManager(BaseWorkspaceManger):
                 if done or n == self.eval_n_steps-1:
                     rewards.append(total_reward)
                     result = self._report_result_upon_completion(goal_idx)
-                    print('Total reward: {}'.format(total_reward))
-                    print(f"Result: {result}")
+                    # print('Total reward: {}'.format(total_reward))
+                    # print(f"Result: {result}")
                     if log_wandb:
                         wandb.log({'Result': result,
                                    'Reward': total_reward
@@ -304,7 +304,7 @@ class FrankaKitchenManager(BaseWorkspaceManger):
                 obs, reward, done, info = self.env.step(pred_action.reshape(-1).detach().cpu().numpy())
                 total_reward += reward
 
-        log.info(f"Total reward: {total_reward}")
+        # log.info(f"Total reward: {total_reward}")
         
         self.env.close()
         if store_video:
@@ -358,21 +358,21 @@ class FrankaKitchenManager(BaseWorkspaceManger):
             if isinstance(agent, BesoAgent):
                 agent.reset()
             for goal_index in tqdm(range(1, 5, 1)):
-                print(goal_index)
+                # print(goal_index)
                 prev_goal_timeframe = goal_timeframe
                 goal, goal_timeframe, goal_task_name = self.seq_goals_fn(obs, goal_idx, goal_index)
                 if goal_index < 4:
                     time_to_complete = goal_timeframe - prev_goal_timeframe + 50
                 else:
                     time_to_complete = 280 - steps
-                print('Goal: {}'.format(goal_task_name))
+                # print('Goal: {}'.format(goal_task_name))
                 delay = 0
                 for n in range(time_to_complete):
                     steps += 1
                     if self.render:
                         self.env.render(mode="human")
                     if goal_task_name in self.env.all_completions and goal_index < 4:
-                        print('Solved task: {}'.format(goal_task_name))
+                        # print('Solved task: {}'.format(goal_task_name))
                         delay  += 1
                         if delay >10:
                             break
@@ -380,8 +380,8 @@ class FrankaKitchenManager(BaseWorkspaceManger):
                     if goal_index == 4 and (done or steps == self.eval_n_steps-1 or n == time_to_complete-1):
                         rewards.append(total_reward)
                         result = self._report_result_upon_completion(goal_idx)
-                        print('Total reward: {}'.format(total_reward))
-                        print(f"Result: {result}")
+                        # print('Total reward: {}'.format(total_reward))
+                        # print(f"Result: {result}")
                         if log_wandb:
                             wandb.log({'Result': result,
                                     'Reward': total_reward
@@ -464,11 +464,12 @@ class FrankaKitchenManager(BaseWorkspaceManger):
             log.info(f"Success rate 4: {self.success_rate_4}")
             log.info(f"Success rate 5: {self.success_rate_5}")
         else:
-            print("Success rate 1: ", self.success_rate_1)
-            print("Success rate 2: ", self.success_rate_2)
-            print("Success rate 3: ", self.success_rate_3)
-            print("Success rate 4: ", self.success_rate_4)
-            print("Success rate 5: ", self.success_rate_5)
+            # print("Success rate 1: ", self.success_rate_1)
+            # print("Success rate 2: ", self.success_rate_2)
+            # print("Success rate 3: ", self.success_rate_3)
+            # print("Success rate 4: ", self.success_rate_4)
+            # print("Success rate 5: ", self.success_rate_5)
+            pass
 
         if log_wandb:
             log.info(f"---------------------------------------")
@@ -492,8 +493,8 @@ class FrankaKitchenManager(BaseWorkspaceManger):
             log.info(f"---------------------------------------")
         else:
             print("---------------------------------------")
-        for key in self.solved_tasks:
-            print(f"{key} solved {self.solved_tasks[key]} times expected {self.expected_tasks[key]} times")
+        # for key in self.solved_tasks:
+        #     print(f"{key} solved {self.solved_tasks[key]} times expected {self.expected_tasks[key]} times")
             # print(f"{key} expected {self.expected_tasks[key]} times")
         return return_dict
     
@@ -534,8 +535,8 @@ class FrankaKitchenManager(BaseWorkspaceManger):
         Returns:
             int: The number of conditional done tasks.
         """
-        print("Complete tasks ", self.env.all_completions)
-        print("Incomplete tasks ", set(self.env.tasks_to_complete))
+        # print("Complete tasks ", self.env.all_completions)
+        # print("Incomplete tasks ", set(self.env.tasks_to_complete))
         if goal_idx is not None:
             train_idx, val_idx = get_split_idx(
                 len(self.relay_traj),
@@ -546,7 +547,7 @@ class FrankaKitchenManager(BaseWorkspaceManger):
             expected_mask = onehot_labels.max(0).values.bool().numpy()
             tasks = np.array(self.env.ALL_TASKS)
             expected_tasks = tasks[expected_mask].tolist()
-            print("Expected tasks ", expected_tasks)
+            # print("Expected tasks ", expected_tasks)
             conditional_done = set(self.env.all_completions).intersection(
                 expected_tasks
             )
